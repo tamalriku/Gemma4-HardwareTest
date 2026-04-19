@@ -1,0 +1,6 @@
+transformers>=5.5.0  # Required for Gemma 4 native multimodal support
+torch
+bitsandbytes
+accelerate
+spaces
+gradio>=4.20.0

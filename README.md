@@ -1,3 +1,13 @@
+---
+title: Gemma4 Hardware Lab
+emoji: ⚡
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+app_file: app.py
+pinned: false
+---
+
 # 🤖 AI Hardware Lab
 ### *Agentic Firmware & Circuit Design powered by Gemma 4*
 

@@ -8,8 +8,8 @@ from transformers import pipeline, BitsAndBytesConfig
 
 # Configuration for 2026 Models
 MODELS = {
-    "Gemma 4 31B (Dense) - Max Logic": "google/gemma-4-31b-it",
-    "Gemma 4 26B (MoE) - Fast Iteration": "google/gemma-4-26b-it"
+    "Gemma 4 31B (Dense) - Max Logic": "google/gemma-4-31B-it",
+    "Gemma 4 26B (MoE) - Fast Iteration": "google/gemma-4-26B-A4B-it"
 }
 
 # --- GPU Inference Logic ---
@@ -40,7 +40,7 @@ def agentic_workflow(idea, model_id, progress=gr.Progress()):
     progress(0.8, desc="Phase 3: Generating Wiring Guide...")
     hw_msg = [{"role": "system", "content": "Hardware Designer. Create a point-to-point wiring table for this code."},
               {"role": "user", "content": f"Source: {code}"}]
-    wiring = pipe(hw_prompt, max_new_tokens=512)[0]['generated_text'][-1]['content']
+    wiring = pipe(hw_msg, max_new_tokens=512)[0]['generated_text'][-1]['content']
 
     # Create temporary file for download
     temp_dir = tempfile.gettempdir()
@@ -56,10 +56,10 @@ theme = gr.themes.Soft(primary_hue="blue", secondary_hue="slate").set(
     button_primary_background_fill_hover="*primary_500",
 )
 
-with gr.Blocks(theme=theme, title="OneCoreSolutions AI Hardware Lab") as demo:
+with gr.Blocks(title="AI Hardware Lab") as demo:
     gr.Markdown("""
     # 🤖 Gemma 4 Hardware Agent
-    ### Professional-grade Arduino Project Generation for Ichhapur Robotics & Engineering
+    ### Professional-grade Arduino Project Generation for Robotics & Engineering
     """)
     
     with gr.Row():
@@ -105,4 +105,4 @@ with gr.Blocks(theme=theme, title="OneCoreSolutions AI Hardware Lab") as demo:
         api_name="generate"
     )
 
-demo.launch()
+demo.launch(theme=theme, ssr_mode=False)

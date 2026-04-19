@@ -9,7 +9,10 @@ from transformers import pipeline, BitsAndBytesConfig
 # Configuration for 2026 Models
 MODELS = {
     "Gemma 4 31B (Dense) - Max Logic": "google/gemma-4-31B-it",
-    "Gemma 4 26B (MoE) - Fast Iteration": "google/gemma-4-26B-A4B-it"
+    "Gemma 4 26B (MoE) - Fast Iteration": "google/gemma-4-26B-A4B-it",
+    "Gemma 4 4B (Medium) - Budget-Friendly": "google/gemma-4-E4B-it",
+    "Gemma 4 2B (Light) - Budget-Friendly": "google/gemma-4-E2B-it"
+    
 }
 
 # --- GPU Inference Logic ---

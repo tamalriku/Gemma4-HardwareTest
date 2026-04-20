@@ -2,13 +2,23 @@ import gradio as gr
 import tempfile
 import os
 import re
+import spaces
 from huggingface_hub import InferenceClient
 
 # ─────────────────────────────────────────────
-#  OPTIMIZATION 1: Models served via HF Inference API
-#  → Zero GPU time on your Space for large models.
-#  → No model loading delay. No VRAM limit.
-#  → Switch between models without restarting.
+#  DUMMY @spaces.GPU FUNCTION
+#  HF Spaces requires at least one GPU function to allocate the GPU.
+#  All actual inference happens via HF Inference API (no GPU used here).
+#  This is just a placeholder to enable GPU support for the Space.
+# ─────────────────────────────────────────────
+@spaces.GPU(duration=1)
+def gpu_startup_check():
+    """Dummy function to satisfy HF Spaces GPU requirement."""
+    pass
+
+
+# ─────────────────────────────────────────────
+#  MODELS & CLIENT SETUP
 # ─────────────────────────────────────────────
 MODELS = {
     "Qwen2.5-Coder-32B  (Best quality)":   "Qwen/Qwen2.5-Coder-32B-Instruct",
@@ -181,4 +191,4 @@ with gr.Blocks(title="AI Hardware Lab", theme=theme) as demo:
         api_name="generate",
     )
 
-demo.launch(ssr_mode=False)
+demo.launch()

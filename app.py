@@ -4,7 +4,7 @@ import spaces
 import tempfile
 import os
 import re
-from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
+from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 import time
 
 # ─────────────────────────────────────────────
@@ -29,11 +29,14 @@ def load_model_cached(model_id: str):
     if model_id not in _model_cache:
         print(f"Loading {model_id}...")
         # Use 8-bit quantization to fit smaller VRAM
+        quant_config = BitsAndBytesConfig(
+            load_in_8bit=True,
+            bnb_8bit_compute_dtype=torch.bfloat16
+        )
         model = AutoModelForCausalLM.from_pretrained(
             model_id,
-            torch_dtype=torch.bfloat16,
             device_map="auto",
-            load_in_8bit=True,  # OPTIMIZATION: 8-bit reduces VRAM by 75%
+            quantization_config=quant_config,
         )
         tokenizer = AutoTokenizer.from_pretrained(model_id)
         _model_cache[model_id] = model
